@@ -51,11 +51,26 @@ class Transposition:
     def decipher(self, k, t):
         return self.cipher1(int((len(t) + 1) / int(k)), t)
 
+class Substitution:
+    def parseKey(self, kf):
+        with open(kf, 'rb') as f:
+            k = f.read()
+        return k
 
+    def cipher(self, k, t):
+        return self.cipher1(self.parseKey(k), t)
 
+    def cipher1(self, k, t):
+        return bytes([k[ti] for ti in t])
+
+    def decipher(self, k, t):
+        ks = self.parseKey(k)
+        vs = [ks[i] for i in range(len(ks))]
+        return self.cipher1(vs, t)
 
 cifras = {"ceasar": Ceasar()
          ,"vigenere": Vigenere()
+         ,"substitution": Substitution()
          ,"transposition": Transposition() }
 
 t = sys.stdin.buffer.read()
