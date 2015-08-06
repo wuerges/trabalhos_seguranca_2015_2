@@ -65,7 +65,10 @@ class Substitution:
 
     def decipher(self, k, t):
         ks = self.parseKey(k)
-        vs = [ks[i] for i in range(len(ks))]
+        vs = {}
+        for i in range(len(ks)):
+            vs[ks[i]] = i
+        #vs = [ks[i] for i in range(len(ks))]
         return self.cipher1(vs, t)
 
 cifras = {"ceasar": Ceasar()
